@@ -94,6 +94,9 @@ class Fighter extends Sprite {
         this.sprites = sprites
         this.dead = false
 
+        this.attackCooldown = 500
+        this.onAttackCooldown
+
         for (const sprite in this.sprites) {
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
@@ -146,11 +149,20 @@ class Fighter extends Sprite {
     }
 
     attack() {
+        if(this.onAttackCooldown) return
+
         this.switchSprite('attack1')
         this.isAttacking = true
+
+        this.onAttackCooldown = true
+
 //        setTimeout(() => {
 //            this.isAttacking = false
 //        }, 100);
+
+        setTimeout(() => {
+            this.onAttackCooldown = false
+        }, this.attackCooldown)
     }
 
     takeHit() {
